@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Length Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+        <div id="converter-container">
+        <link rel="stylesheet" href="https://cdn.pixabay.com/photo/2022/01/14/06/53/education-6936596_1280.jpg">
+
+        <div>
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit" onchange="convertUnits()">
+                <option value="meter">Meter</option>
+                <option value="kilometer">Kilometer</option>
+                <option value="centimeter">Centimeter</option>
+                <option value="millimeter">Millimeter</option>
+                <option value="mile">Mile</option>
+                <option value="yard">Yard</option>
+                <option value="foot">Foot</option>
+                <option value="inch">Inch</option>
+                <option value="nauticalmile">Nautical Mile</option>
+                <option value="lightyear">Light Year</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit" onchange="convertUnits()">
+                <option value="meter">Meter</option>
+                <option value="kilometer">Kilometer</option>
+                <option value="centimeter">Centimeter</option>
+                <option value="millimeter">Millimeter</option>
+                <option value="mile">Mile</option>
+                <option value="yard">Yard</option>
+                <option value="foot">Foot</option>
+                <option value="inch">Inch</option>
+                <option value="nauticalmile">Nautical Mile</option>
+                <option value="lightyear">Light Year</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="fromValue">From Value:</label>
+            <input type="number" id="fromValue" oninput="convertUnits()">
+        </div>
+
+        <div>
+            <label for="toValue">To Value:</label>
+            <input type="text" id="toValue" readonly>
+        </div>
+        <div>
+          <!-- <button type="submit" onclick="convertUnits()">Submit</button> -->
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+  <center>
+    <table>
+        <tr>
+          <th>Unit</th>
+          <th>Conversion to Meter</th>
+        </tr>
+        <tr>
+          <td>Millimeter</td>
+          <td>0.001 meter</td>
+        </tr>
+        <tr>
+          <td>Centimeter</td>
+          <td>0.01 meter</td>
+        </tr>
+        <tr>
+          <td>Inch</td>
+          <td>0.0254 meter</td>
+        </tr>
+        <tr>
+          <td>Foot</td>
+          <td>0.3048 meter</td>
+        </tr>
+        <tr>
+          <td>Yard</td>
+          <td>0.9144 meter</td>
+        </tr>
+        <tr>
+          <td>Meter</td>
+          <td>1 meter</td>
+        </tr>
+        <tr>
+            <td>Kilometer</td>
+            <td>1000 meters</td>
+          </tr>
+        <tr>
+          <td>Mile</td>
+          <td>1609.344 meters</td>
+        </tr>
+        <tr>
+          <td>Nautical Mile</td>
+          <td>1852 meters</td>
+        </tr>
+        <tr>
+          <td>Light Year</td>
+          <td>9.461 × 10<sup>15</sup> meters</td>
+        </tr>
+      </table>
+    </center>
+
+    <script>
+      function convertUnits() {
+
+var fromUnit = document.getElementById("fromUnit").value;
+var toUnit = document.getElementById("toUnit").value;
+var fromValue = parseFloat(document.getElementById("fromValue").value);
+
+var conversionFactor = getConversionFactor(fromUnit, toUnit);
+var toValue = fromValue * conversionFactor;
+
+
+document.getElementById("toValue").value = toValue;
+}
+
+function getConversionFactor(fromUnit, toUnit) {
+var conversionFactors = {
+    meter: {
+        meter: 1,
+        kilometer: 0.001,
+        centimeter: 100,
+        millimeter: 1000,
+        mile: 0.000621371,
+        yard: 1.09361,
+        foot: 3.28084,
+        inch: 39.3701,
+        nauticalmile: 0.000539957,
+        lightyear: 1.057e-16
+
+    },
+    kilometer: {
+        meter: 1000,
+        kilometer: 1,
+        centimeter: 100000,
+        millimeter: 1000000,
+        mile: 0.621371,
+        yard: 1093.61,
+        foot: 3280.84,
+        inch: 39370.1,
+        nauticalmile: 0.539957,
+        lightyear: 1.057e-13
+
+    },
+    centimeter: {
+        meter: 0.01,
+        kilometer: 1e-5,
+        millimeter: 10,
+        mile: 6.2137e-6,
+        yard: 0.0109361,
+        foot: 0.0328084,
+        inch: 0.393701,
+        nauticalmile: 5.3996e-6,
+        lightyear: 1.057e-18
+
+    },
+    millimeter: {
+        meter: 0.001,
+        kilometer: 1e-6,
+        centimeter: 0.1,
+        mile: 6.2137e-7,
+        yard: 0.00109361,
+        foot: 0.00328084,
+        inch: 0.0393701,
+        nauticalmile: 5.3996e-7,
+        lightyear: 1.057e-19
+
+    },
+    mile: {
+        meter: 1609.34,
+        kilometer: 1.60934,
+        centimeter: 160934,
+        millimeter: 1.60934e+6,
+        yard: 1760,
+        foot: 5280,
+        inch: 63360,
+        nauticalmile: 0.868976,
+        lightyear: 1.701e-13
+
+    },
+    yard: {
+        meter: 0.9144,
+        kilometer: 9.144e-4,
+        centimeter: 91.44,
+        millimeter: 914.4,
+        mile: 1.760e-3,
+        foot: 3,
+        inch: 36,
+        nauticalmile: 0.000493737,
+        lightyear: 9.665e-17
+
+    },
+    foot: {
+        meter: 0.3048,
+        kilometer: 3.048e-4,
+        centimeter: 30.48,
+        millimeter: 304.8,
+        mile: 5.682e-4,
+        yard: 0.333333,
+        inch: 12,
+        nauticalmile: 0.000164579,
+        lightyear: 3.221e-17
+
+    },
+    inch: {
+        meter: 0.0254,
+        kilometer: 2.54e-5,
+        centimeter: 2.54,
+        millimeter: 25.4,
+        mile: 1.578e-5,
+        yard: 0.0277778,
+        foot: 0.0833333,
+        nauticalmile: 1.3715e-5,
+        lightyear: 2.6848e-18
+
+    },
+    nauticalmile: {
+        meter: 1852,
+        kilometer: 1.852,
+        centimeter: 185200,
+        millimeter: 1.852e+6,
+        mile: 1.15078,
+        yard: 2025.37,
+        foot: 6076.12,
+        inch: 72913.4,
+        lightyear: 1.957e-13
+
+    },
+    lightyear: {
+        meter: 9.461e+15,
+        kilometer: 9.461e+12,
+        centimeter: 9.461e+17,
+        millimeter: 9.461e+18,
+        mile: 5.879e+12,
+        yard: 1.034e+16,
+        foot: 3.112e+16,
+        inch: 3.734e+17,
+        nauticalmile: 5.106e+12
+
+    }
+    
+};
+
+
+return conversionFactors[fromUnit][toUnit];
+
+}
+function resetForm() {
+
+document.getElementById("fromUnit").selectedIndex = 0;
+document.getElementById("toUnit").selectedIndex = 0;
+document.getElementById("fromValue").value = "";
+document.getElementById("toValue").value = "";
+}
+
+    </script>
+</body>
+</html>

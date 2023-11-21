@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volume Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div id="converter-container">
+        <div>
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit" onchange="convertUnits()">
+                <option value="cubicMeter">Cubic Meter</option>
+                <option value="cubicKilometer">Cubic Kilometer</option>
+                <option value="cubicCentimeter">Cubic Centimeter</option>
+                <option value="cubicMillimeter">Cubic Millimeter</option>
+                <option value="liter">Liter</option>
+                <option value="milliliter">Milliliter</option>
+                <option value="gallon">Gallon</option>
+                <option value="quart">Quart</option>
+                <option value="pint">Pint</option>
+                <option value="cup">Cup</option>
+                <option value="fluidOunce">Fluid Ounce</option>
+                <option value="tablespoon">Tablespoon</option>
+                <option value="teaspoon">Teaspoon</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit" onchange="convertUnits()">
+                <option value="cubicMeter">Cubic Meter</option>
+                <option value="cubicKilometer">Cubic Kilometer</option>
+                <option value="cubicCentimeter">Cubic Centimeter</option>
+                <option value="cubicMillimeter">Cubic Millimeter</option>
+                <option value="liter">Liter</option>
+                <option value="milliliter">Milliliter</option>
+                <option value="gallon">Gallon</option>
+                <option value="quart">Quart</option>
+                <option value="pint">Pint</option>
+                <option value="cup">Cup</option>
+                <option value="fluidOunce">Fluid Ounce</option>
+                <option value="tablespoon">Tablespoon</option>
+                <option value="teaspoon">Teaspoon</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="fromValue">From Value:</label>
+            <input type="number" id="fromValue" oninput="convertUnits()">
+        </div>
+
+        <div>
+            <label for="toValue">To Value:</label>
+            <input type="text" id="toValue" readonly>
+        </div>
+
+        <div>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+  <center>
+    <table>
+        <tr>
+          <th>Unit</th>
+          <th>Conversion to Liter</th>
+        </tr>
+        <tr>
+          <td>Cubic Meter</td>
+          <td>1000 liters</td>
+        </tr>
+        <tr>
+          <td>Cubic Kilometer</td>
+          <td>1e+15 liters</td>
+        </tr>
+        <tr>
+          <td>Cubic Centimeter</td>
+          <td>0.001 liters</td>
+        </tr>
+        <tr>
+          <td>Cubic Millimeter</td>
+          <td>1e-6 liters</td>
+        </tr>
+        <tr>
+          <td>Liter</td>
+          <td>1 liter</td>
+        </tr>
+        <tr>
+          <td>Milliliter</td>
+          <td>0.001 liters</td>
+        </tr>
+        <tr>
+          <td>Gallon</td>
+          <td>3.78541 liters</td>
+        </tr>
+        <tr>
+          <td>Quart</td>
+          <td>0.946353 liters</td>
+        </tr>
+        <tr>
+          <td>Pint</td>
+          <td>0.473176 liters</td>
+        </tr>
+        <tr>
+          <td>Cup</td>
+          <td>0.24 liters</td>
+        </tr>
+        <tr>
+          <td>Fluid Ounce</td>
+          <td>0.0295735 liters</td>
+        </tr>
+        <tr>
+          <td>Tablespoon</td>
+          <td>0.0147868 liters</td>
+        </tr>
+        <tr>
+          <td>Teaspoon</td>
+          <td>0.00492892 liters</td>
+        </tr>
+      </table>
+    </center>
+    <script>
+      function convertUnits() {
+    var fromUnit = document.getElementById("fromUnit").value;
+    var toUnit = document.getElementById("toUnit").value;
+    var fromValue = parseFloat(document.getElementById("fromValue").value);
+
+    var conversionFactor = getConversionFactor(fromUnit, toUnit);
+    var toValue = fromValue * conversionFactor;
+
+    document.getElementById("toValue").value = toValue;
+}
+
+function getConversionFactor(fromUnit, toUnit) {
+    var conversionFactors = {
+        cubicMeter: {
+            cubicMeter: 1,
+            cubicKilometer: 1e-9,
+            cubicCentimeter: 1e6,
+            cubicMillimeter: 1e9,
+            liter: 1000,
+            milliliter: 1e6,
+            gallon: 264.172,
+            quart: 1056.69,
+            pint: 2113.38,
+            cup: 4166.67,
+            fluidOunce: 33814,
+            tablespoon: 67628.1,
+            teaspoon: 202884
+        },
+        cubicKilometer: {
+            cubicMeter: 1e9,
+            cubicKilometer: 1,
+            cubicCentimeter: 1e15,
+            cubicMillimeter: 1e18,
+            liter: 1e12,
+            milliliter: 1e15,
+            gallon: 2.64172e11,
+            quart: 1.05669e12,
+            pint: 2.11338e12,
+            cup: 4.16667e12,
+            fluidOunce: 3.3814e13,
+            tablespoon: 6.76281e13,
+            teaspoon: 2.02884e14
+        },
+        cubicCentimeter: {
+            cubicMeter: 1e-6,
+            cubicKilometer: 1e-15,
+            cubicCentimeter: 1,
+            cubicMillimeter: 1000,
+            liter: 0.001,
+            milliliter: 1,
+            gallon: 0.000264172,
+            quart: 0.00105669,
+            pint: 0.00211338,
+            cup: 0.00416667,
+            fluidOunce: 0.033814,
+            tablespoon: 0.0676281,
+            teaspoon: 0.202884
+        },
+        cubicMillimeter: {
+            cubicMeter: 1e-9,
+            cubicKilometer: 1e-18,
+            cubicCentimeter: 0.001,
+            cubicMillimeter: 1,
+            liter: 1e-6,
+            milliliter: 0.001,
+            gallon: 2.64172e-7,
+            quart: 1.05669e-6,
+            pint: 2.11338e-6,
+            cup: 4.16667e-6,
+            fluidOunce: 3.3814e-5,
+            tablespoon: 6.76281e-5,
+            teaspoon: 2.02884e-4
+        },
+        liter: {
+            cubicMeter: 0.001,
+            cubicKilometer: 1e-12,
+            cubicCentimeter: 1000,
+            cubicMillimeter: 1e6,
+            liter: 1,
+            milliliter: 1000,
+            gallon: 0.264172,
+            quart: 1.05669,
+            pint: 2.11338,
+            cup: 4.16667,
+            fluidOunce: 33.814,
+            tablespoon: 67.6281,
+            teaspoon: 202.884
+        },
+        milliliter: {
+            cubicMeter: 1e-6,
+            cubicKilometer: 1e-15,
+            cubicCentimeter: 1,
+            cubicMillimeter: 1000,
+            liter: 0.001,
+            milliliter: 1,
+            gallon: 0.000264172,
+            quart: 0.00105669,
+            pint: 0.00211338,
+            cup: 0.00416667,
+            fluidOunce: 0.033814,
+            tablespoon: 0.0676281,
+            teaspoon: 0.202884
+        },
+        gallon: {
+            cubicMeter: 0.00378541,
+            cubicKilometer: 3.78541e-12,
+            cubicCentimeter: 3785.41,
+            cubicMillimeter: 3.78541e6,
+            liter: 3.78541,
+            milliliter: 3785.41,
+            gallon: 1,
+            quart: 4,
+            pint: 8,
+            cup: 16,
+            fluidOunce: 128,
+            tablespoon: 256,
+            teaspoon: 768
+        },
+        quart: {
+            cubicMeter: 0.000946353,
+            cubicKilometer: 9.46353e-13,
+            cubicCentimeter: 946.353,
+            cubicMillimeter: 946353,
+            liter: 0.946353,
+            milliliter: 946.353,
+            gallon: 0.25,
+            quart: 1,
+            pint: 2,
+            cup: 4,
+            fluidOunce: 32,
+            tablespoon: 64,
+            teaspoon: 192
+        },
+        pint: {
+            cubicMeter: 0.000473176,
+            cubicKilometer: 4.73176e-13,
+            cubicCentimeter: 473.176,
+            cubicMillimeter: 473176,
+            liter: 0.473176,
+            milliliter: 473.176,
+            gallon: 0.125,
+            quart: 0.5,
+            pint: 1,
+            cup: 2,
+            fluidOunce: 16,
+            tablespoon: 32,
+            teaspoon: 96
+        },
+        cup: {
+            cubicMeter: 0.00024,
+            cubicKilometer: 2.4e-13,
+            cubicCentimeter: 240,
+            cubicMillimeter: 240000,
+            liter: 0.24,
+            milliliter: 240,
+            gallon: 0.0625,
+            quart: 0.25,
+            pint: 0.5,
+            cup: 1,
+            fluidOunce: 8,
+            tablespoon: 16,
+            teaspoon: 48
+        },
+        fluidOunce: {
+            cubicMeter: 2.95735e-5,
+            cubicKilometer: 2.95735e-14,
+            cubicCentimeter: 29.5735,
+            cubicMillimeter: 29573.5,
+            liter: 0.0295735,
+            milliliter: 29.5735,
+            gallon: 0.0078125,
+            quart: 0.03125,
+            pint: 0.0625,
+            cup: 0.125,
+            fluidOunce: 1,
+            tablespoon: 2,
+            teaspoon: 6
+        },
+        tablespoon: {
+            cubicMeter: 1.47868e-5,
+            cubicKilometer: 1.47868e-14,
+            cubicCentimeter: 14.7868,
+            cubicMillimeter: 14786.8,
+            liter: 0.0147868,
+            milliliter: 14.7868,
+            gallon: 0.00390625,
+            quart: 0.015625,
+            pint: 0.03125,
+            cup: 0.0625,
+            fluidOunce: 0.5,
+            tablespoon: 1,
+            teaspoon: 3
+        },
+        teaspoon: {
+            cubicMeter: 4.92892e-6,
+            cubicKilometer: 4.92892e-15,
+            cubicCentimeter: 4.92892,
+            cubicMillimeter: 4928.92,
+            liter: 0.00492892,
+            milliliter: 4.92892,
+            gallon: 0.00130208,
+            quart: 0.00520833,
+            pint: 0.0104167,
+            cup: 0.0208333,
+            fluidOunce: 0.166667,
+            tablespoon: 0.333333,
+            teaspoon: 1
+        }
+    };
+    return conversionFactors[fromUnit][toUnit];
+}
+
+function resetForm() {
+    document.getElementById("fromUnit").selectedIndex = 0;
+    document.getElementById("toUnit").selectedIndex = 0;
+    document.getElementById("fromValue").value = "";
+    document.getElementById("toValue").value = "";
+}
+
+    </script>
+</body>
+</html>

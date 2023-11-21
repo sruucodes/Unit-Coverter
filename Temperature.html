@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div id="converter-container">
+        <div>
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit" onchange="convertUnits()">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit" onchange="convertUnits()">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="fromValue">From Value:</label>
+            <input type="number" id="fromValue" oninput="convertUnits()">
+        </div>
+
+        <div>
+            <label for="toValue">To Value:</label>
+            <input type="text" id="toValue" readonly>
+        </div>
+
+        <div>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+<center>
+    <table>
+        <tr>
+          <th>Unit</th>
+          <th>Conversion to Celsius</th>
+        </tr>
+        <tr>
+          <td>Celsius</td>
+          <td>1 Celsius</td>
+        </tr>
+        <tr>
+          <td>Fahrenheit</td>
+          <td>(°F - 32) / 1.8</td>
+        </tr>
+        <tr>
+          <td>Kelvin</td>
+          <td>K - 273.15</td>
+        </tr>
+      </table>
+    </center>
+
+    <script>
+        function convertUnits() {
+    var fromUnit = document.getElementById("fromUnit").value;
+    var toUnit = document.getElementById("toUnit").value;
+    var fromValue = parseFloat(document.getElementById("fromValue").value);
+
+    var conversionFactor = getConversionFactor(fromUnit, toUnit);
+    var toValue = fromValue * conversionFactor;
+
+    document.getElementById("toValue").value = toValue.toFixed(2); // Limiting to two decimal places
+}
+
+function getConversionFactor(fromUnit, toUnit) {
+    var conversionFactors = {
+        celsius: {
+            celsius: 1,
+            fahrenheit: 33.8,
+            kelvin: 274.15
+        },
+        fahrenheit: {
+            celsius: -17.2222,
+            fahrenheit: 1,
+            kelvin: 255.928
+        },
+        kelvin: {
+            celsius: -272.15,
+            fahrenheit: -457.87,
+            kelvin: 1
+        }
+    };
+    return conversionFactors[fromUnit][toUnit];
+}
+
+function resetForm() {
+    document.getElementById("fromUnit").selectedIndex = 0;
+    document.getElementById("toUnit").selectedIndex = 0;
+    document.getElementById("fromValue").value = "";
+    document.getElementById("toValue").value = "";
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div id="converter-container">
+        <div>
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit" onchange="convertUnits()">
+                <option value="squareMeter">Square Meter</option>
+                <option value="squareKilometer">Square Kilometer</option>
+                <option value="squareCentimeter">Square Centimeter</option>
+                <option value="squareMillimeter">Square Millimeter</option>
+                <option value="squareMile">Square Mile</option>
+                <option value="squareYard">Square Yard</option>
+                <option value="squareFoot">Square Foot</option>
+                <option value="squareInch">Square Inch</option>
+                <option value="acre">Acre</option>
+                <option value="hectare">Hectare</option>
+                <option value="squareMile">Square Mile</option>
+                <option value="barn">Barn</option>
+                <option value="squareRod">Square Rod</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit" onchange="convertUnits()">
+                <option value="squareMeter">Square Meter</option>
+                <option value="squareKilometer">Square Kilometer</option>
+                <option value="squareCentimeter">Square Centimeter</option>
+                <option value="squareMillimeter">Square Millimeter</option>
+                <option value="squareMile">Square Mile</option>
+                <option value="squareYard">Square Yard</option>
+                <option value="squareFoot">Square Foot</option>
+                <option value="squareInch">Square Inch</option>
+                <option value="acre">Acre</option>
+                <option value="hectare">Hectare</option>
+                <option value="squareMile">Square Mile</option>
+                <option value="barn">Barn</option>
+                <option value="squareRod">Square Rod</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="fromValue">From Value:</label>
+            <input type="number" id="fromValue" oninput="convertUnits()">
+        </div>
+
+        <div>
+            <label for="toValue">To Value:</label>
+            <input type="text" id="toValue" readonly>
+        </div>
+
+        <div>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+    <center>
+    <table>
+        <tr>
+          <th>Unit</th>
+          <th>Conversion to Square Meter</th>
+        </tr>
+        <tr>
+          <td>Square Millimeter</td>
+          <td>1e-6 square meters</td>
+        </tr>
+        <tr>
+          <td>Square Centimeter</td>
+          <td>0.0001 square meters</td>
+        </tr>
+        <tr>
+          <td>Square Inch</td>
+          <td>0.00064516 square meters</td>
+        </tr>
+        <tr>
+          <td>Square Foot</td>
+          <td>0.092903 square meters</td>
+        </tr>
+        <tr>
+          <td>Square Yard</td>
+          <td>0.836127 square meters</td>
+        </tr>
+        <tr>
+          <td>Acre</td>
+          <td>4046.86 square meters</td>
+        </tr>
+        <tr>
+          <td>Hectare</td>
+          <td>10000 square meters</td>
+        </tr>
+        <tr>
+          <td>Square Kilometer</td>
+          <td>1e+6 square meters</td>
+        </tr>
+        <tr>
+          <td>Square Mile</td>
+          <td>2.58999e+6 square meters</td>
+        </tr>
+        <tr>
+          <td>Barn</td>
+          <td>1e-28 square meters</td>
+        </tr>
+        <tr>
+          <td>Square Rod</td>
+          <td>25.2929 square meters</td>
+        </tr>
+      </table>
+    </center>
+
+    <script>
+      function convertUnits() {
+
+var fromUnit = document.getElementById("fromUnit").value;
+var toUnit = document.getElementById("toUnit").value;
+var fromValue = parseFloat(document.getElementById("fromValue").value);
+
+
+var conversionFactor = getConversionFactor(fromUnit, toUnit);
+var toValue = fromValue * conversionFactor;
+
+
+document.getElementById("toValue").value = toValue;
+}
+
+function getConversionFactor(fromUnit, toUnit) {
+var conversionFactors = {
+    squareMeter: {
+        squareMeter: 1,
+        squareKilometer: 1e-6,
+        squareCentimeter: 1e4,
+        squareMillimeter: 1e6,
+        squareMile: 3.861e-7,
+        squareYard: 1.19599,
+        squareFoot: 10.7639,
+        squareInch: 1550.0031,
+        acre: 3.861e-4,
+        hectare: 1e-4,
+        barn: 1e28,
+        squareRod: 0.0395369
+    },
+    squareKilometer: {
+        squareMeter: 1e6,
+        squareKilometer: 1,
+        squareCentimeter: 1e10,
+        squareMillimeter: 1e12,
+        squareMile: 0.239006,
+        squareYard: 1.19599e6,
+        squareFoot: 1.07639e7,
+        squareInch: 1.55e9,
+        acre: 247.105,
+        hectare: 100,
+        barn: 1e34,
+        squareRod: 39536.9
+    },
+    squareCentimeter: {
+        squareMeter: 1e-4,
+        squareKilometer: 1e-10,
+        squareCentimeter: 1,
+        squareMillimeter: 100,
+        squareMile: 3.861e-11,
+        squareYard: 0.00119599,
+        squareFoot: 0.107639,
+        squareInch: 15.5003,
+        acre: 3.861e-8,
+        hectare: 1e-8,
+        barn: 1e24,
+        squareRod: 0.00000395369
+    },
+    squareMillimeter: {
+        squareMeter: 1e-6,
+        squareKilometer: 1e-12,
+        squareCentimeter: 0.01,
+        squareMillimeter: 1,
+        squareMile: 3.861e-13,
+        squareYard: 0.00000119599,
+        squareFoot: 0.0000107639,
+        squareInch: 0.00155003,
+        acre: 3.861e-10,
+        hectare: 1e-10,
+        barn: 1e22,
+        squareRod: 3.95369e-9
+    },
+    squareMile: {
+        squareMeter: 2.58999e6,
+        squareKilometer: 2.58999,
+        squareCentimeter: 2.58999e12,
+        squareMillimeter: 2.58999e15,
+        squareMile: 1,
+        squareYard: 3.098e6,
+        squareFoot: 2.788e7,
+        squareInch: 4.014e9,
+        acre: 640,
+        hectare: 258.999,
+        barn: 2.59e34,
+        squareRod: 2.59e7
+
+    },
+    squareYard: {
+        squareMeter: 0.836127,
+        squareKilometer: 8.36127e-7,
+        squareCentimeter: 8361.27,
+        squareMillimeter: 836127,
+        squareMile: 3.2283e-7,
+        squareYard: 1,
+        squareFoot: 9,
+        squareInch: 1296,
+        acre: 0.000206612,
+        hectare: 8.36127e-5,
+        barn: 8.36127e28,
+        squareRod: 0.0000836127
+    },
+    squareFoot: {
+        squareMeter: 0.092903,
+        squareKilometer: 9.2903e-8,
+        squareCentimeter: 929.03,
+        squareMillimeter: 92903,
+        squareMile: 3.587e-8,
+        squareYard: 0.111111,
+        squareFoot: 1,
+        squareInch: 144,
+        acre: 0.0000229568,
+        hectare: 9.2903e-6,
+        barn: 9.2903e26,
+        squareRod: 0.000092903
+    },
+    squareInch: {
+        squareMeter: 0.00064516,
+        squareKilometer: 6.4516e-10,
+        squareCentimeter: 6.4516,
+        squareMillimeter: 645.16,
+        squareMile: 2.49e-10,
+        squareYard: 0.000771605,
+        squareFoot: 0.00694444,
+        squareInch: 1,
+        acre: 1.5942e-7,
+        hectare: 6.4516e-8,
+        barn: 6.4516e24,
+        squareRod: 6.4516e-7
+    },
+    acre: {
+        squareMeter: 4046.86,
+        squareKilometer: 0.00404686,
+        squareCentimeter: 4.04686e7,
+        squareMillimeter: 4.04686e10,
+        squareMile: 0.0015625,
+        squareYard: 4.840e3,
+        squareFoot: 4.356e4,
+        squareInch: 6.273e6,
+        acre: 1,
+        hectare: 0.404686,
+        barn: 4.04686e30,
+        squareRod: 404.686
+    },
+    hectare: {
+        squareMeter: 1e4,
+        squareKilometer: 0.01,
+        squareCentimeter: 1e8,
+        squareMillimeter: 1e10,
+        squareMile: 0.003861e-3,
+        squareYard: 1e4,
+        squareFoot: 1e5,
+        squareInch: 1.55e7,
+        acre: 2.47105,
+        hectare: 1,
+        barn: 1e32,
+        squareRod: 10000
+    },
+    barn: {
+        squareMeter: 1e-28,
+        squareKilometer: 1e-34,
+        squareCentimeter: 1e-24,
+        squareMillimeter: 1e-22,
+        squareMile: 2.58999e-35,
+        squareYard: 8.36127e-26,
+        squareFoot: 9.2903e-26,
+        squareInch: 6.4516e-24,
+        acre: 2.47105e-30,
+        hectare: 1e-32,
+        barn: 1,
+        squareRod: 3.95369e-29
+    },
+    squareRod: {
+        squareMeter: 25.2929,
+        squareKilometer: 2.52929e-5,
+        squareCentimeter: 252929,
+        squareMillimeter: 2.52929e7,
+        squareMile: 9.762e-6,
+        squareYard: 30.25,
+        squareFoot: 272.25,
+        squareInch: 39204,
+        acre: 0.00625,
+        hectare: 2.52929e-3,
+        barn: 2.52929e29,
+        squareRod: 1
+    }
+
+};
+return conversionFactors[fromUnit][toUnit];
+}
+
+function resetForm() {
+document.getElementById("fromUnit").selectedIndex = 0;
+document.getElementById("toUnit").selectedIndex = 0;
+document.getElementById("fromValue").value = "";
+document.getElementById("toValue").value = "";
+}
+
+    </script>
+</body>
+</html>

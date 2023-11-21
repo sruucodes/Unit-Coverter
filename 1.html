@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link href="1.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Unit Converter</h1>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+            <ul>
+                <li><a href="#" onclick="location.reload();">HOME</a></li>
+                <li class="dropdown">
+                    <a href="#">UNIT</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#" onclick="updateIframe('Length')">Length</a></li>
+                        <li><a href="#" onclick="updateIframe('Area')">Area</a></li>
+                        <li><a href="#" onclick="updateIframe('Power')">Power</a></li>
+                        <li><a href="#" onclick="updateIframe('Mass')">Mass</a></li>
+                        <li><a href="#" onclick="updateIframe('Temperature')">Temperature</a></li>
+                        <li><a href="#" onclick="updateIframe('Time')">Time</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div id="content">
+        <div id="mainSection">
+            <iframe id="mainConverter" src="Length.html" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+        <div id="sidebar">
+            <div id="sidebarToggle">
+            </div>
+            <a href="#" id="Length" onclick="updateIframe('Length')">Length</a>
+            <a href="#" id="Area" onclick="updateIframe('Area')">Area</a>
+            <a href="#" id="Power" onclick="updateIframe('Power')">Power</a>
+            <a href="#" id="Mass" onclick="updateIframe('Mass')">Mass</a>
+            <a href="#" id="Temperature" onclick="updateIframe('Temperature')">Temperature</a>
+            <a href="#" id="Time" onclick="updateIframe('Time')">Time</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Unit Converter</p>
+    </footer>
+
+    <script>
+        function updateIframe(unit) {
+            var iframe = document.getElementById('mainConverter');
+            iframe.src = unit + '.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var lastScrollTop = 0;
+            var navbar = document.querySelector('.navbar');
+        
+            window.addEventListener("scroll", function () {
+                var st = window.pageYOffset || document.documentElement.scrollTop;
+                if (st > lastScrollTop) {
+                    // Scrolling down
+                    if (navbar.classList.contains('show-nav')) {
+                        navbar.classList.remove('show-nav');
+                    }
+                } else {
+                    // Scrolling up
+                    if (!navbar.classList.contains('show-nav')) {
+                        navbar.classList.add('show-nav');
+                    }
+                }
+                lastScrollTop = st;
+            });
+        });
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
+            var toggleBtn = document.getElementById('toggle-btn');
+
+            if (sidebar.style.left === '-200px') {
+                sidebar.style.left = '0';
+                content.style.marginLeft = '200px';
+                toggleBtn.style.left = '180px';
+            } else {
+                sidebar.style.left = '-200px';
+                content.style.marginLeft = '0';
+                toggleBtn.style.left = '20px';
+            }
+        }
+    </script>
+</body>
+</html>

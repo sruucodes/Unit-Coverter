@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mass Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div id="converter-container">
+        <div>
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit" onchange="convertUnits()">
+                <option value="gram">Gram</option>
+                <option value="kilogram">Kilogram</option>
+                <option value="milligram">Milligram</option>
+                <option value="microgram">Microgram</option>
+                <option value="metricTon">Metric Ton</option>
+                <option value="ounce">Ounce</option>
+                <option value="pound">Pound</option>
+                <option value="ton">Ton</option>
+                <option value="carat">Carat</option>
+                <option value="stone">Stone</option>
+                <option value="longTon">Long Ton</option>
+                <option value="shortTon">Short Ton</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit" onchange="convertUnits()">
+                <option value="gram">Gram</option>
+                <option value="kilogram">Kilogram</option>
+                <option value="milligram">Milligram</option>
+                <option value="microgram">Microgram</option>
+                <option value="metricTon">Metric Ton</option>
+                <option value="ounce">Ounce</option>
+                <option value="pound">Pound</option>
+                <option value="ton">Ton</option>
+                <option value="carat">Carat</option>
+                <option value="stone">Stone</option>
+                <option value="longTon">Long Ton</option>
+                <option value="shortTon">Short Ton</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="fromValue">From Value:</label>
+            <input type="number" id="fromValue" oninput="convertUnits()">
+        </div>
+
+        <div>
+            <label for="toValue">To Value:</label>
+            <input type="text" id="toValue" readonly>
+        </div>
+
+        <div>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+  <center>
+    <table>
+        <tr>
+          <th>Unit</th>
+          <th>Conversion to Gram</th>
+        </tr>
+        <tr>
+          <td>Milligram</td>
+          <td>0.001 gram</td>
+        </tr>
+        <tr>
+          <td>Microgram</td>
+          <td>1e-6 gram</td>
+        </tr>
+        <tr>
+          <td>Kilogram</td>
+          <td>1000 grams</td>
+        </tr>
+        <tr>
+          <td>Metric Ton</td>
+          <td>1e+6 grams</td>
+        </tr>
+        <tr>
+          <td>Ounce</td>
+          <td>28.3495 grams</td>
+        </tr>
+        <tr>
+          <td>Pound</td>
+          <td>453.592 grams</td>
+        </tr>
+        <tr>
+          <td>Ton</td>
+          <td>1e+6 grams</td>
+        </tr>
+        <tr>
+          <td>Carat</td>
+          <td>0.2 grams</td>
+        </tr>
+        <tr>
+          <td>Stone</td>
+          <td>6350.29 grams</td>
+        </tr>
+        <tr>
+          <td>Long Ton</td>
+          <td>1.01605e+6 grams</td>
+        </tr>
+        <tr>
+          <td>Short Ton</td>
+          <td>907185 grams</td>
+        </tr>
+      </table>
+    </center>
+
+    <script>
+      function convertUnits() {
+
+var fromUnit = document.getElementById("fromUnit").value;
+var toUnit = document.getElementById("toUnit").value;
+var fromValue = parseFloat(document.getElementById("fromValue").value);
+
+var conversionFactor = getConversionFactor(fromUnit, toUnit);
+var toValue = fromValue * conversionFactor;
+
+document.getElementById("toValue").value = toValue;
+}
+
+function getConversionFactor(fromUnit, toUnit) {
+var conversionFactors = {
+    gram: {
+        gram: 1,
+        kilogram: 0.001,
+        milligram: 1000,
+        microgram: 1e6,
+        metricTon: 1e-6,
+        ounce: 0.03527396,
+        pound: 0.002204623,
+        ton: 1.10231131e-6,
+        carat: 5,
+        stone: 0.000157473,
+        longTon: 1.10231131e-7,
+        shortTon: 1.10231131e-6
+    },
+    kilogram: {
+        gram: 1000,
+        kilogram: 1,
+        milligram: 1e6,
+        microgram: 1e9,
+        metricTon: 1e-3,
+        ounce: 35.27396,
+        pound: 2.204623,
+        ton: 0.00110231131,
+        carat: 5000,
+        stone: 0.0157473,
+        longTon: 0.000110231131,
+        shortTon: 0.00110231131
+    },
+    milligram: {
+        gram: 0.001,
+        kilogram: 1e-6,
+        milligram: 1,
+        microgram: 1000,
+        metricTon: 1e-9,
+        ounce: 3.527396e-5,
+        pound: 2.204623e-6,
+        ton: 1.10231131e-9,
+        carat: 0.005,
+        stone: 1.57473e-7,
+        longTon: 1.10231131e-10,
+        shortTon: 1.10231131e-9
+    },
+    microgram: {
+        gram: 1e-6,
+        kilogram: 1e-9,
+        milligram: 0.001,
+        microgram: 1,
+        metricTon: 1e-12,
+        ounce: 3.527396e-8,
+        pound: 2.204623e-9,
+        ton: 1.10231131e-12,
+        carat: 5e-6,
+        stone: 1.57473e-10,
+        longTon: 1.10231131e-13,
+        shortTon: 1.10231131e-12
+    },
+    metricTon: {
+        gram: 1e6,
+        kilogram: 1000,
+        milligram: 1e9,
+        microgram: 1e12,
+        metricTon: 1,
+        ounce: 35273.96,
+        pound: 2204.623,
+        ton: 1.10231131,
+        carat: 5e6,
+        stone: 157.473,
+        longTon: 0.110231131,
+        shortTon: 1.10231131
+    },
+    ounce: {
+        gram: 28.34952,
+        kilogram: 0.02834952,
+        milligram: 28349.52,
+        microgram: 2.834952e7,
+        metricTon: 2.834952e-5,
+        ounce: 1,
+        pound: 0.0625,
+        ton: 3.125e-5,
+        carat: 141.7476,
+        stone: 0.004464286,
+        longTon: 3.125e-6,
+        shortTon: 3.125e-5
+    },
+    pound: {
+        gram: 453.5924,
+        kilogram: 0.4535924,
+        milligram: 453592.4,
+        microgram: 4.535924e8,
+        metricTon: 0.0004535924,
+        ounce: 16,
+        pound: 1,
+        ton: 5e-4,
+        carat: 2267.962,
+        stone: 0.07142857,
+        longTon: 5e-5,
+        shortTon: 0.0005
+    },
+    ton: {
+        gram: 1.016e6,
+        kilogram: 1016.046,
+        milligram: 1.016e9,
+        microgram: 1.016e12,
+        metricTon: 1.016,
+        ounce: 32000,
+        pound: 2000,
+        ton: 1,
+        carat: 5.08e6,
+        stone: 160,
+        longTon: 0.1016,
+        shortTon: 1.016
+    },
+    carat: {
+        gram: 0.2,
+        kilogram: 2e-4,
+        milligram: 200,
+        microgram: 200000,
+        metricTon: 2e-7,
+        ounce: 0.007055,
+        pound: 0.000440925,
+        ton: 2e-7,
+        carat: 1,
+        stone: 3.1495e-5,
+        longTon: 2.204623e-8,
+        shortTon: 2e-7
+    },
+    stone: {
+        gram: 6350.29318,
+        kilogram: 6.35029318,
+        milligram: 6.35e6,
+        microgram: 6.35e9,
+        metricTon: 0.00635029318,
+        ounce: 224,
+        pound: 14,
+        ton: 0.007,
+        carat: 31751.4659,
+        stone: 1,
+        longTon: 0.0007,
+        shortTon: 0.007
+    },
+    longTon: {
+        gram: 1.016e6,
+        kilogram: 1016.046,
+        milligram: 1.016e9,
+        microgram: 1.016e12,
+        metricTon: 1.016,
+        ounce: 32000,
+        pound: 2000,
+        ton: 1,
+        carat: 5.08e6,
+        stone: 160,
+        longTon: 0.1016,
+        shortTon: 1.016
+    },
+    shortTon: {
+        gram: 907185,
+        kilogram: 907.185,
+        milligram: 907185e3,
+        microgram: 907185e8,
+        metricTon: 0.907185,
+        ounce: 32000,
+        pound: 2000,
+        ton: 1,
+        carat: 4535924,
+        stone: 142.857,
+        longTon: 0.000892857
+    }
+};
+return conversionFactors[fromUnit][toUnit];
+}
+
+function resetForm() {
+document.getElementById("fromUnit").selectedIndex = 0;
+document.getElementById("toUnit").selectedIndex = 0;
+document.getElementById("fromValue").value = "";
+document.getElementById("toValue").value = "";
+}
+
+    </script>
+</body>
+</html>

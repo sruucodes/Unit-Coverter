@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="converter-container">
+        <div>
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit" onchange="convertUnits()">
+                <option value="second">Second</option>
+                <option value="minute">Minute</option>
+                <option value="hour">Hour</option>
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+                <option value="decade">Decade</option>
+                <option value="century">Century</option>
+                <option value="millennium">Millennium</option>
+                <option value="fortnight">Fortnight</option>
+                <option value="microsecond">Microsecond</option>
+                <option value="millisecond">Millisecond</option>
+                <option value="nanosecond">Nanosecond</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit" onchange="convertUnits()">
+                <option value="second">Second</option>
+                <option value="minute">Minute</option>
+                <option value="hour">Hour</option>
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+                <option value="decade">Decade</option>
+                <option value="century">Century</option>
+                <option value="millennium">Millennium</option>
+                <option value="fortnight">Fortnight</option>
+                <option value="microsecond">Microsecond</option>
+                <option value="millisecond">Millisecond</option>
+                <option value="nanosecond">Nanosecond</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="fromValue">From Value:</label>
+            <input type="number" id="fromValue" oninput="convertUnits()">
+        </div>
+
+        <div>
+            <label for="toValue">To Value:</label>
+            <input type="text" id="toValue" readonly>
+        </div>
+
+        <div>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+  <center>
+    <table>
+    <tr>
+      <th>Unit</th>
+      <th>Conversion to Second</th>
+    </tr>
+    <tr>
+      <td>Second</td>
+      <td>1 second</td>
+    </tr>
+    <tr>
+      <td>Minute</td>
+      <td>60 seconds</td>
+    </tr>
+    <tr>
+      <td>Hour</td>
+      <td>3600 seconds</td>
+    </tr>
+    <tr>
+      <td>Day</td>
+      <td>86400 seconds</td>
+    </tr>
+    <tr>
+      <td>Week</td>
+      <td>604800 seconds</td>
+    </tr>
+    <tr>
+      <td>Month</td>
+      <td>2628000 seconds</td>
+    </tr>
+    <tr>
+      <td>Year</td>
+      <td>31536000 seconds</td>
+    </tr>
+    <tr>
+      <td>Decade</td>
+      <td>315360000 seconds</td>
+    </tr>
+    <tr>
+      <td>Century</td>
+      <td>3153600000 seconds</td>
+    </tr>
+    <tr>
+      <td>Millennium</td>
+      <td>31536000000 seconds</td>
+    </tr>
+    <tr>
+      <td>Fortnight</td>
+      <td>1209600 seconds</td>
+    </tr>
+    <tr>
+      <td>Microsecond</td>
+      <td>1e-6 seconds</td>
+    </tr>
+    <tr>
+      <td>Millisecond</td>
+      <td>0.001 seconds</td>
+    </tr>
+    <tr>
+      <td>Nanosecond</td>
+      <td>1e-9 seconds</td>
+    </tr>
+  </table>
+</center>
+
+    <script>
+      function convertUnits() {
+    // Get the selected units and values
+    var fromUnit = document.getElementById("fromUnit").value;
+    var toUnit = document.getElementById("toUnit").value;
+    var fromValue = parseFloat(document.getElementById("fromValue").value);
+
+    // Perform the conversion
+    var conversionFactor = getConversionFactor(fromUnit, toUnit);
+    var toValue = fromValue * conversionFactor;
+
+    // Display the result
+    document.getElementById("toValue").value = toValue;
+}
+
+function getConversionFactor(fromUnit, toUnit) {
+    var conversionFactors = {
+        second: {
+            second: 1,
+            minute: 1 / 60,
+            hour: 1 / 3600,
+            day: 1 / (3600 * 24),
+            week: 1 / (3600 * 24 * 7),
+            month: 1 / (3600 * 24 * 30), // Assuming a month is 30 days
+            year: 1 / (3600 * 24 * 365.25), // Assuming a year is 365.25 days
+            decade: 1 / (3600 * 24 * 365.25 * 10),
+            century: 1 / (3600 * 24 * 365.25 * 100),
+            millennium: 1 / (3600 * 24 * 365.25 * 1000),
+            fortnight: 1 / (3600 * 24 * 14),
+            microsecond: 1e6,
+            millisecond: 1e3,
+            nanosecond: 1e9
+            // Add more units as needed
+        },
+        minute: {
+            second: 60,
+            minute: 1,
+            hour: 1 / 60,
+            day: 1 / (60 * 24),
+            week: 1 / (60 * 24 * 7),
+            month: 1 / (60 * 24 * 30),
+            year: 1 / (60 * 24 * 365.25),
+            decade: 1 / (60 * 24 * 365.25 * 10),
+            century: 1 / (60 * 24 * 365.25 * 100),
+            millennium: 1 / (60 * 24 * 365.25 * 1000),
+            fortnight: 1 / (60 * 24 * 14),
+            microsecond: 1e6 * 60,
+            millisecond: 1e3 * 60,
+            nanosecond: 1e9 * 60
+            // Add more units as needed
+        },
+        hour: {
+            second: 3600,
+            minute: 60,
+            hour: 1,
+            day: 1 / 24,
+            week: 1 / (24 * 7),
+            month: 1 / (24 * 30),
+            year: 1 / (24 * 365.25),
+            decade: 1 / (24 * 365.25 * 10),
+            century: 1 / (24 * 365.25 * 100),
+            millennium: 1 / (24 * 365.25 * 1000),
+            fortnight: 1 / (24 * 14),
+            microsecond: 1e6 * 3600,
+            millisecond: 1e3 * 3600,
+            nanosecond: 1e9 * 3600
+            // Add more units as needed
+        },
+        day: {
+            second: 3600 * 24,
+            minute: 60 * 24,
+            hour: 24,
+            day: 1,
+            week: 1 / 7,
+            month: 1 / 30,
+            year: 1 / 365.25,
+            decade: 1 / (365.25 * 10),
+            century: 1 / (365.25 * 100),
+            millennium: 1 / (365.25 * 1000),
+            fortnight: 1 / 14,
+            microsecond: 1e6 * 3600 * 24,
+            millisecond: 1e3 * 3600 * 24,
+            nanosecond: 1e9 * 3600 * 24
+            // Add more units as needed
+        },
+        week: {
+            second: 3600 * 24 * 7,
+            minute: 60 * 24 * 7,
+            hour: 24 * 7,
+            day: 7,
+            week: 1,
+            month: 1 / 4, // Assuming a month is 4 weeks
+            year: 1 / 52, // Assuming a year is 52 weeks
+            decade: 1 / (52 * 10),
+            century: 1 / (52 * 100),
+            millennium: 1 / (52 * 1000),
+            fortnight: 2,
+            microsecond: 1e6 * 3600 * 24 * 7,
+            millisecond: 1e3 * 3600 * 24 * 7,
+            nanosecond: 1e9 * 3600 * 24 * 7
+            // Add more units as needed
+        },
+        month: {
+            second: 3600 * 24 * 30, // Assuming a month is 30 days
+            minute: 60 * 24 * 30,
+            hour: 24 * 30,
+            day: 30,
+            week: 4, // Assuming a month is 4 weeks
+            month: 1,
+            year: 1 / 12,
+            decade: 1 / (30 * 12),
+            century: 1 / (30 * 12 * 100),
+            millennium: 1 / (30 * 12 * 1000),
+            fortnight: 1 / 2,
+            microsecond: 1e6 * 3600 * 24 * 30,
+            millisecond: 1e3 * 3600 * 24 * 30,
+            nanosecond: 1e9 * 3600 * 24 * 30
+            // Add more units as needed
+        },
+        year: {
+            second: 3600 * 24 * 365.25, // Assuming a year is 365.25 days
+            minute: 60 * 24 * 365.25,
+            hour: 24 * 365.25,
+            day: 365.25,
+            week: 52.1775, // Assuming a year is 52 weeks
+            month: 12,
+            year: 1,
+            decade: 1 / 10,
+            century: 1 / 100,
+            millennium: 1 / 1000,
+            fortnight: 1 / (365.25 * 14),
+            microsecond: 1e6 * 3600 * 24 * 365.25,
+            millisecond: 1e3 * 3600 * 24 * 365.25,
+            nanosecond: 1e9 * 3600 * 24 * 365.25
+            // Add more units as needed
+        },
+        decade: {
+            second: 3600 * 24 * 365.25 * 10,
+            minute: 60 * 24 * 365.25 * 10,
+            hour: 24 * 365.25 * 10,
+            day: 365.25 * 10,
+            week: 52.1775 * 10,
+            month: 12 * 10,
+            year: 10,
+            decade: 1,
+            century: 1 / 10,
+            millennium: 1 / 100,
+            fortnight: 1 / (365.25 * 14 * 10),
+            microsecond: 1e6 * 3600 * 24 * 365.25 * 10,
+            millisecond: 1e3 * 3600 * 24 * 365.25 * 10,
+            nanosecond: 1e9 * 3600 * 24 * 365.25 * 10
+            // Add more units as needed
+        },
+        century: {
+            second: 3600 * 24 * 365.25 * 100,
+            minute: 60 * 24 * 365.25 * 100,
+            hour: 24 * 365.25 * 100,
+            day: 365.25 * 100,
+            week: 52.1775 * 100,
+            month: 12 * 100,
+            year: 100,
+            decade: 10,
+            century: 1,
+            millennium: 1 / 10,
+            fortnight: 1 / (365.25 * 14 * 100),
+            microsecond: 1e6 * 3600 * 24 * 365.25 * 100,
+            millisecond: 1e3 * 3600 * 24 * 365.25 * 100,
+            nanosecond: 1e9 * 3600 * 24 * 365.25 * 100
+
+        },
+        millennium: {
+            second: 3600 * 24 * 365.25 * 1000,
+            minute: 60 * 24 * 365.25 * 1000,
+            hour: 24 * 365.25 * 1000,
+            day: 365.25 * 1000,
+            week: 52.1775 * 1000,
+            month: 12 * 1000,
+            year: 1000,
+            decade: 100,
+            century: 10,
+            millennium: 1,
+            fortnight: 1 / (365.25 * 14 * 1000),
+            microsecond: 1e6 * 3600 * 24 * 365.25 * 1000,
+            millisecond: 1e3 * 3600 * 24 * 365.25 * 1000,
+            nanosecond: 1e9 * 3600 * 24 * 365.25 * 1000
+        },
+        fortnight: {
+            second: 3600 * 24 * 14,
+            minute: 60 * 24 * 14,
+            hour: 24 * 14,
+            day: 14,
+            week: 2,
+            month: 1 / 2,
+            year: 1 / (365.25 * 14),
+            decade: 1 / (365.25 * 14 * 10),
+            century: 1 / (365.25 * 14 * 100),
+            millennium: 1 / (365.25 * 14 * 1000),
+            fortnight: 1,
+            microsecond: 1e6 * 3600 * 24 * 14,
+            millisecond: 1e3 * 3600 * 24 * 14,
+            nanosecond: 1e9 * 3600 * 24 * 14
+        },
+        microsecond: {
+            second: 1e-6,
+            minute: 1e-6 * 60,
+            hour: 1e-6 * 3600,
+            day: 1e-6 * 3600 * 24,
+            week: 1e-6 * 3600 * 24 * 7,
+            month: 1e-6 * 3600 * 24 * 30,
+            year: 1e-6 * 3600 * 24 * 365.25,
+            decade: 1e-6 * 3600 * 24 * 365.25 * 10,
+            century: 1e-6 * 3600 * 24 * 365.25 * 100,
+            millennium: 1e-6 * 3600 * 24 * 365.25 * 1000,
+            fortnight: 1e-6 * 3600 * 24 * 14,
+            microsecond: 1,
+            millisecond: 1e3,
+            nanosecond: 1e9
+        },
+        millisecond: {
+            second: 1e-3,
+            minute: 1e-3 * 60,
+            hour: 1e-3 * 3600,
+            day: 1e-3 * 3600 * 24,
+            week: 1e-3 * 3600 * 24 * 7,
+            month: 1e-3 * 3600 * 24 * 30,
+            year: 1e-3 * 3600 * 24 * 365.25,
+            decade: 1e-3 * 3600 * 24 * 365.25 * 10,
+            century: 1e-3 * 3600 * 24 * 365.25 * 100,
+            millennium: 1e-3 * 3600 * 24 * 365.25 * 1000,
+            fortnight: 1e-3 * 3600 * 24 * 14,
+            microsecond: 1e-3 * 3600 * 24 * 1e6,
+            millisecond: 1,
+            nanosecond: 1e6
+            },
+            nanosecond: {
+            second: 1e-9,
+            minute: 1e-9 * 60,
+            hour: 1e-9 * 3600,
+            day: 1e-9 * 3600 * 24,
+            week: 1e-9 * 3600 * 24 * 7,
+            month: 1e-9 * 3600 * 24 * 30,
+            year: 1e-9 * 3600 * 24 * 365.25,
+            decade: 1e-9 * 3600 * 24 * 365.25 * 10,
+            century: 1e-9 * 3600 * 24 * 365.25 * 100,
+            millennium: 1e-9 * 3600 * 24 * 365.25 * 1000,
+            fortnight: 1e-9 * 3600 * 24 * 14,
+            microsecond: 1e-9 * 3600 * 24 * 1e6,
+            millisecond: 1e-9 * 3600 * 24 * 1e3,
+            nanosecond: 1
+
+            }
+        };
+        return conversionFactors[fromUnit][toUnit];
+    }
+
+        function resetForm() {
+
+        document.getElementById("fromUnit").selectedIndex = 0;
+        document.getElementById("toUnit").selectedIndex = 0;
+        document.getElementById("fromValue").value = "";
+        document.getElementById("toValue").value = "";
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div id="converter-container">
+        <div>
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit" onchange="convertUnits()">
+                <option value="microwatt">Microwatt</option>
+                <option value="milliwatt">Milliwatt</option>
+                <option value="watt">Watt</option>
+                <option value="kilowatt">Kilowatt</option>
+                <option value="megawatt">Megawatt</option>
+                <option value="gigawatt">Gigawatt</option>
+                <option value="terawatt">Terawatt</option>
+                <option value="picowatt">Picowatt</option>
+                <option value="horsepower">Horsepower</option>
+                <option value="dBm">dBm</option>
+                <option value="ergPerSecond">Erg Per Second</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit" onchange="convertUnits()">
+                <option value="microwatt">Microwatt</option>
+                <option value="milliwatt">Milliwatt</option>
+                <option value="watt">Watt</option>
+                <option value="kilowatt">Kilowatt</option>
+                <option value="megawatt">Megawatt</option>
+                <option value="gigawatt">Gigawatt</option>
+                <option value="terawatt">Terawatt</option>
+                <option value="picowatt">Picowatt</option>
+                <option value="horsepower">Horsepower</option>
+                <option value="dBm">dBm</option>
+                <option value="ergPerSecond">Erg Per Second</option>
+            </select>
+        </div>
+        <div>
+            <label for="fromValue">From Value:</label>
+            <input type="number" id="fromValue" oninput="convertUnits()">
+        </div>
+
+        <div>
+            <label for="toValue">To Value:</label>
+            <input type="text" id="toValue" readonly>
+        </div>
+
+        <div>
+            <button type="reset" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+  <center>
+    <table>
+        <tr>
+          <th>Unit</th>
+          <th>Conversion to Watt</th>
+        </tr>
+        <tr>
+          <td>Microwatt</td>
+          <td>1e-6 watts</td>
+        </tr>
+        <tr>
+          <td>Milliwatt</td>
+          <td>0.001 watts</td>
+        </tr>
+        <tr>
+          <td>Watt</td>
+          <td>1 watt</td>
+        </tr>
+        <tr>
+          <td>Kilowatt</td>
+          <td>1000 watts</td>
+        </tr>
+        <tr>
+          <td>Megawatt</td>
+          <td>1e+6 watts</td>
+        </tr>
+        <tr>
+          <td>Gigawatt</td>
+          <td>1e+9 watts</td>
+        </tr>
+        <tr>
+          <td>Terawatt</td>
+          <td>1e+12 watts</td>
+        </tr>
+        <tr>
+          <td>Picowatt</td>
+          <td>1e-12 watts</td>
+        </tr>
+        <tr>
+          <td>Horsepower</td>
+          <td>745.7 watts</td>
+        </tr>
+        <tr>
+          <td>dBm</td>
+          <td>1e-3 watts</td>
+        </tr>
+        <tr>
+          <td>Erg Per Second</td>
+          <td>1e-7 watts</td>
+        </tr>
+      </table>
+    </center>
+    <script>
+      function convertUnits() {
+
+var fromUnit = document.getElementById("fromUnit").value;
+var toUnit = document.getElementById("toUnit").value;
+var fromValue = parseFloat(document.getElementById("fromValue").value);
+
+
+var conversionFactor = getConversionFactor(fromUnit, toUnit);
+var toValue = fromValue * conversionFactor;
+
+
+document.getElementById("toValue").value = toValue;
+}
+
+function getConversionFactor(fromUnit, toUnit) {
+var conversionFactors = {
+    microwatt: {
+        microwatt: 1,
+        milliwatt: 0.001,
+        watt: 1e-6,
+        kilowatt: 1e-9,
+        megawatt: 1e-12,
+        gigawatt: 1e-15,
+        terawatt: 1e-18,
+        picowatt: 1e6,
+        horsepower: 1.34102e-9,
+        dBm: 30,
+        ergPerSecond: 1e1
+    },
+    milliwatt: {
+        microwatt: 1000,
+        milliwatt: 1,
+        watt: 1e-3,
+        kilowatt: 1e-6,
+        megawatt: 1e-9,
+        gigawatt: 1e-12,
+        terawatt: 1e-15,
+        picowatt: 1e9,
+        horsepower: 1.34102e-6,
+        dBm: 60,
+        ergPerSecond: 1e4
+    },
+    watt: {
+        microwatt: 1e6,
+        milliwatt: 1000,
+        watt: 1,
+        kilowatt: 1e-3,
+        megawatt: 1e-6,
+        gigawatt: 1e-9,
+        terawatt: 1e-12,
+        picowatt: 1e12,
+        horsepower: 1.34102e-3,
+        dBm: 90,
+        ergPerSecond: 1e7
+    },
+    kilowatt: {
+        microwatt: 1e9,
+        milliwatt: 1e6,
+        watt: 1000,
+        kilowatt: 1,
+        megawatt: 1e-3,
+        gigawatt: 1e-6,
+        terawatt: 1e-9,
+        picowatt: 1e15,
+        horsepower: 1.34102,
+        dBm: 120,
+        ergPerSecond: 1e10
+    },
+    megawatt: {
+        microwatt: 1e12,
+        milliwatt: 1e9,
+        watt: 1e6,
+        kilowatt: 1000,
+        megawatt: 1,
+        gigawatt: 1e-3,
+        terawatt: 1e-6,
+        picowatt: 1e18,
+        horsepower: 1341.02,
+        dBm: 150,
+        ergPerSecond: 1e13
+    },
+    gigawatt: {
+        microwatt: 1e15,
+        milliwatt: 1e12,
+        watt: 1e9,
+        kilowatt: 1e6,
+        megawatt: 1000,
+        gigawatt: 1,
+        terawatt: 1e-3,
+        picowatt: 1e21,
+        horsepower: 1.34102e6,
+        dBm: 180,
+        ergPerSecond: 1e16
+    },
+    terawatt: {
+        microwatt: 1e18,
+        milliwatt: 1e15,
+        watt: 1e12,
+        kilowatt: 1e9,
+        megawatt: 1e6,
+        gigawatt: 1000,
+        terawatt: 1,
+        picowatt: 1e24,
+        horsepower: 1.34102e9,
+        dBm: 210,
+        ergPerSecond: 1e19
+    },
+    picowatt: {
+        microwatt: 1e-6,
+        milliwatt: 1e-3,
+        watt: 1e-12,
+        kilowatt: 1e-15,
+        megawatt: 1e-18,
+        gigawatt: 1e-21,
+        terawatt: 1e-24,
+        picowatt: 1,
+        horsepower: 1.34102e-15,
+        dBm: 30,
+        ergPerSecond: 1e-6
+    },
+    horsepower: {
+        microwatt: 745.7,
+        milliwatt: 0.7457,
+        watt: 0.001,
+        kilowatt: 1e-6,
+        megawatt: 1e-9,
+        gigawatt: 1e-12,
+        terawatt: 1e-15,
+        picowatt: 745.7e9,
+        horsepower: 1,
+        dBm: 48.5732,
+        ergPerSecond: 7.457e9
+    },
+    dBm: {
+        microwatt: 1e-3,
+        milliwatt: 1e-6,
+        watt: 1e-9,
+        kilowatt: 1e-12,
+        megawatt: 1e-15,
+        gigawatt: 1e-18,
+        terawatt: 1e-21,
+        picowatt: 1e6,
+        horsepower: 6.9477e-4,
+        dBm: 1,
+        ergPerSecond: 1e4
+    },
+    ergPerSecond: {
+        microwatt: 1e7,
+        milliwatt: 1e4,
+        watt: 1e1,
+        kilowatt: 1e-2,
+        megawatt: 1e-5,
+        gigawatt: 1e-8,
+        terawatt: 1e-11,
+        picowatt: 1e6,
+        horsepower: 7.457e-3,
+        dBm: 1e-4,
+        ergPerSecond: 1
+    }
+};
+return conversionFactors[fromUnit][toUnit];
+}
+
+
+function resetForm() {
+document.getElementById("fromUnit").selectedIndex = 0;
+document.getElementById("toUnit").selectedIndex = 0;
+document.getElementById("fromValue").value = "";
+document.getElementById("toValue").value = "";
+}
+
+
+    </script>
+</body>
+</html>
